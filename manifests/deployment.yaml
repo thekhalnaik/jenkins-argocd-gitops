@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jenkins-argocd-app
+  namespace: default
+  labels:
+    app: jenkins-argocd-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: jenkins-argocd-app
+  template:
+    metadata:
+      labels:
+        app: jenkins-argocd-app
+    spec:
+      containers:
+        - name: jenkins-argocd-app
+          # Jenkins overwrites this line during the "Update GitOps Repo" stage.
+          # Starts pointing at Docker Hub; swap to your ECR URI to practice
+          # pulling from ECR instead (you'll need an imagePullSecret for that -
+          # see manifests/ecr-pull-secret-template.yaml)
+          image: your-dockerhub-username/jenkins-argocd-app:v1.0.0
+          ports:
+            - containerPort: 3000
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "64Mi"
+            limits:
+              cpu: "250m"
+              memory: "128Mi"
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 3000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 3000
+            initialDelaySeconds: 10
+            periodSeconds: 15

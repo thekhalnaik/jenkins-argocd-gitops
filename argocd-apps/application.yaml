@@ -1,0 +1,34 @@
+# ArgoCD Application definition - apply this ON the cluster (EC2-2) once
+# ArgoCD is installed:
+#   kubectl apply -f application.yaml -n argocd
+#
+# This tells ArgoCD: "watch the manifests/ folder in this repo, and keep
+# the cluster's default namespace in sync with whatever is there."
+
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: jenkins-argocd-app
+  namespace: argocd
+spec:
+  project: default
+
+  source:
+    repoURL: https://github.com/your-username/jenkins-argocd-gitops.git
+    targetRevision: main
+    path: manifests
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+
+  syncPolicy:
+    # Start with manual sync while learning (Pillar 4, concept #3), then
+    # switch to automated once you've observed manual sync behavior.
+    automated: null
+    # Uncomment once ready to practice auto-sync:
+    # automated:
+    #   selfHeal: true
+    #   prune: true
+    syncOptions:
+      - CreateNamespace=true
