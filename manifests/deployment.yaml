@@ -21,7 +21,7 @@ spec:
           # Starts pointing at Docker Hub; swap to your ECR URI to practice
           # pulling from ECR instead (you'll need an imagePullSecret for that -
           # see manifests/ecr-pull-secret-template.yaml)
-          image: your-dockerhub-username/jenkins-argocd-app:v1.0.0
+          image: ggauravv/jenkins-argocd-app:54508dc
           ports:
             - containerPort: 3000
           resources:
