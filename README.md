@@ -25,3 +25,4 @@ Pillar 4 troubleshooting exercise to try once on purpose).
    ```
    kubectl apply -f argocd-apps/application.yaml
    ```
+test
