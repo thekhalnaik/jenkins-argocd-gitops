@@ -14,7 +14,7 @@ spec:
   project: default
 
   source:
-    repoURL: https://github.com/your-username/jenkins-argocd-gitops.git
+    repoURL: https://github.com/thekhalnaik/jenkins-argocd-gitops.git
     targetRevision: main
     path: manifests
 
